@@ -1,15 +1,15 @@
 import React from 'react';
 import Ingredient from './Ingredient';
 
-const IngredientList = (props) => {
+const IngredientList = ({ingredients, add, idx}) => {
     
     // map over the ingr
     // mapped over and created from Ingredient Component
-    let allIngredients = props.ingredients.map((ing, idx) => (
+    let allIngredients = ingredients.map((ing, idx) => (
         <li key={idx}>
             <Ingredient 
                 ingredient={ing}
-                clickFunc={(e) => props.add(e)}
+                clickFunc={add}
                 itemKey={idx}
             />
         </li>

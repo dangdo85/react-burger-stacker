@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import IngredientList from './IngredientList';
 import BurgerPane from './BurgerPane';
 
-const BurgerStacker = () => {
+const BurgerStacker = (props) => {
     const ingredients = [
             {name: 'Kaiser Bun', color: 'saddlebrown'},
             {name: 'Sesame Bun', color: 'sandybrown'},
@@ -20,7 +20,7 @@ const BurgerStacker = () => {
             {name: 'Mustard', color: 'yellow'},
             {name: 'Mayonaise', color: 'cream'},
           ]
-        const [burgerIngredients, setBurgerIngredients] = useState([])
+        const [stack, setStack] = useState([{name:"", color: ""}])
 
     // add to the burger
     // click on an ingr and use the 'event' to target it
@@ -30,10 +30,10 @@ const addToStack = (e) => {
     // grab the name
     const ingName = e.target.innerText
     // add to state
-    setBurgerIngredients([
+    setStack([
             {name: ingName, color: ingColor}, 
             // spread operator (...) take what's inside the burgerIngredients array and copies it over here
-            ...burgerIngredients
+            ...stack
     ])
 }
 
@@ -42,11 +42,11 @@ const addToStack = (e) => {
         // select an ingr by id
         const clickIndex = e.target.id
         // copy the whole burger
-        const currBurger = burgerIngredients.slice()
+        const currBurger = stack.slice()
         // remove that ingr
         currBurger.splice(clickIndex, 1)
         // set that state
-        setBurgerIngredients({burgerIngredients: currBurger})
+        setStack( currBurger)
     }
     // clear said burger
     const clearBurger = () => {
@@ -58,12 +58,12 @@ const addToStack = (e) => {
     //     })
     // }
     // render () {
-        setBurgerIngredients([])
+        setStack([])
     }
     return (
         <>
             <IngredientList ingredients={ingredients} add={addToStack}/> 
-            <BurgerPane ingredients={burgerIngredients} remove={removeFromStack} clear={clearBurger}/>
+            <BurgerPane stack={stack} remove={removeFromStack} clear={clearBurger}/>
         </>
     )   
 }
